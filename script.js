@@ -275,20 +275,60 @@ document.addEventListener('DOMContentLoaded', function(event) {
   // Batman Films
   const imdbBatman = imdb.Movies.filter(movie => movie.Title.includes('Batman'));
 
-  const radioButton = document.querySelector("button").addEventListener('click', function() {
-    location.reload();
-  });
-
-
   // select movies element from DOM
   let moviesElement = document.querySelector('.movies');
 
   // functions
   // create movie cards
   const createMovieCards = function(movies) {
-    let movieCard = moviesElement.createElement('div', { class : 'moviecard' });
-    movieCard.createElement('div', { class : 'movie' });
+    // create movie card for each movie
+    movies.map(function(movie) {
+
+      //create card div element + apply class
+      movieCard = document.createElement('div');
+      movieCard.className = 'movieCard';
+
+      // create img element + apply class + add path to poster
+      let imgElement = document.createElement('img')
+      imgElement.className = 'movieImg';
+      imgElement.src = `${movie.Poster}`;
+
+      //create 'a' element
+      let aElement = document.createElement('a');
+      aElement.href = `https://www.imdb.com/title/${movie.imdbID}`;
+      let aImgElement = aElement;
+      let aH5Element = aElement;
+
+      // add h5 title element for eacht movie
+      let h5Element = document.createElement('h5', { class : 'movieTitle' });
+
+      // add title text to h5 element
+      h5Element.innerHTML = `${movie.Title}`;
+
+      // create card structure
+
+      // append card to moviesElement
+      moviesElement.appendChild(movieCard);
+
+      //append a to movieCard
+      let movieCardAImg = movieCard.appendChild(aImgElement);
+
+      //append title to movieCard
+      let movieCardATitle = movieCard.appendChild(aH5Element);
+
+      //append a to movieCard
+      let movieCardImg = movieCardAImg.appendChild(imgElement);
+
+      //append title to movieCard
+      let movieCardTitle = movieCardATitle.appendChild(h5Element);
+
+
+
+    });
   };
+
+  // invoke at start
+  createMovieCards(imdb.Movies);
 
   // remove movie cards from .movies DOM
   const deleteMovieCards = function() {
@@ -298,12 +338,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     while (movieCard.firstChild) {
       movieCard.removeChild(underScore.firstChild);
     }
+    //populate the dom with filtered movie object
+
   }
 
-  // populate the dom with filtered movie object
-
-  movieCards();
   // logic
+
+  // const radioButton = document.querySelectorAll("button").addEventListener('click', function() {
+  //   location.reload();
+  // });
 
 
 });
