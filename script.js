@@ -322,8 +322,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
       //append title to movieCard
       let movieCardTitle = movieCardATitle.appendChild(h5Element);
 
-
-
     });
   };
 
