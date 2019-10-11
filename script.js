@@ -259,31 +259,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
     ]
   }
 
-  //filtered movie objects/arrays
-  // Nieuwste Films
-  const imdbYearDesc = Array(imdb.Movies.sort((a,b) => parseInt(b.Year) - parseInt(a.Year)));
-
-  // Avengers Films
-  const imdbAvengers = imdb.Movies.filter(movie => movie.Title.includes('Avengers'));
-
-  // X//Men Films
-  const imdbXmen = imdb.Movies.filter(movie => movie.Title.includes('X-Men'));
-
-  // Princess Films
-  const imdbPrincess = imdb.Movies.filter(movie => movie.Title.includes('Princess'));
-
-  // Batman Films
-  const imdbBatman = imdb.Movies.filter(movie => movie.Title.includes('Batman'));
-
-  // select movies element from DOM
-  let moviesElement = document.querySelector('.movies');
-
-  // functions
   // create movie cards
   const createMovieCards = function(movies) {
     // create movie card for each movie
+    console.log(movies);
     movies.map(function(movie) {
-
       //create card div element + apply class
       movieCard = document.createElement('div');
       movieCard.className = 'movieCard';
@@ -296,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
       //create 'a' element
       let aElement = document.createElement('a');
       aElement.href = `https://www.imdb.com/title/${movie.imdbID}`;
+      aElement.target = '_blank';
       let aImgElement = aElement;
       let aH5Element = aElement;
 
@@ -306,8 +287,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
       h5Element.innerHTML = `${movie.Title}`;
 
       // create card structure
-
       // append card to moviesElement
+      let moviesElement = document.querySelector('.movies');
       moviesElement.appendChild(movieCard);
 
       //append a to movieCard
@@ -325,26 +306,57 @@ document.addEventListener('DOMContentLoaded', function(event) {
     });
   };
 
-  // invoke at start
-  createMovieCards(imdb.Movies);
 
-  // remove movie cards from .movies DOM
-  const deleteMovieCards = function() {
-    let movieCard = document.querySelectorAll('.movies');
+  //filtered movie objects/arrays
+  const selectMovies = function(movies) {
+    switch (movies) {
+      case'nieuwste':
+        const imdbYearDesc = imdb.Movies.filter(movie => parseInt(movie.Year) < 2014);
+        console.log(imdbYearDesc);
+        createMovieCards(imdbYearDesc);
+        break;
+      case'avengers':
+        const imdbAvengers = imdb.Movies.filter(movie => movie.Title.includes('Avengers'));
+        createMovieCards(imdbAvengers);
+        break;
+      case'xmen':
+        const imdbXmen = imdb.Movies.filter(movie => movie.Title.includes('X-Men'));
+        createMovieCards(imdbXmen);
+        break;
+      case'princess':
+        const imdbPrincess = imdb.Movies.filter(movie => movie.Title.includes('Princess'));
+        createMovieCards(imdbPrincess);
+        break;
+      case'batman':
+        const imdbBatman = imdb.Movies.filter(movie => movie.Title.includes('Batman'));
+        createMovieCards(imdbBatman);
+        break;
+      default:
+        createMovieCards(imdb.Movies);
+        break;
+    }
 
+  };
+
+  //invoke all movies at start
+  selectMovies();
+
+  // remove movie cards from .movies DOM element
+  const deleteMovieCards = function(movies) {
+    let movieCard = document.querySelector('.movies');
     // remove card elements if present
     while (movieCard.firstChild) {
-      movieCard.removeChild(underScore.firstChild);
+      movieCard.removeChild(movieCard.firstChild);
     }
-    //populate the dom with filtered movie object
-
+    //populate filter movies based of filter selection
+    selectMovies(movies);
   }
 
   // logic
-
-  // const radioButton = document.querySelectorAll("button").addEventListener('click', function() {
-  //   location.reload();
-  // });
-
+  document.querySelectorAll("input").forEach(function(input) {
+    input.addEventListener('click', function() {
+      deleteMovieCards(input.id);
+    });
+  })
 
 });
