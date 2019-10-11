@@ -5,31 +5,62 @@ html {
 body {
   margin: 0;
   padding: 0;
+  background: #222;
+  color: #FFF;
 }
 
 .mainContent {
   display: block;
   margin: 0 auto;
-  width: 400px;
+  width: 90%;
+}
+.siteTitle {
+  text-align-last: center;
+}
+.buttons {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+.radioButtons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
 }
 
-.answer {
-  display: block;
-  margin: 0 auto;
-  width: 300px;
+.movies {
+  display: flex;
+      flex-wrap: wrap;
 }
 .movieCard {
-  display: block;
-  height: 170px;
-  width: 10px;
+  display: flex;
+  width: 150px;
+  margin: 6px;
+  flex-wrap: wrap;
+}
 
-}
-.movieCard > img {
-  height: 100%;
+.movieCard > a {
+  text-decoration: none;
+  color: #FFF;
   width: 100%;
-  border-radius: 10px
-  margin: 10px;
+  border-radius: 10px;
 }
+
+.movieCard > a {
+  text-decoration: none;
+  color: #FFF;
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+.movieCard > a > img {
+  width: 100%;
+  border-radius: 10px;
+}
+
 h5 {
   display: block;
+
 }
