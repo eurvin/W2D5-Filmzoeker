@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(event) {
 
-  // Project vars
   // database with movies
   let imdb = {
     "Movies": [
@@ -261,8 +260,18 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   // create movie cards
   const createMovieCards = function(movies) {
-    // create movie card for each movie
+
+    // filter movies
+    if(movies === undefined) {
+      movies = imdb.Movies
+    }  else if(movies == 'nieuwste') {
+      movies = imdb.Movies.filter(movie => parseInt(movie.Year) > 2014);
+      console.log(movies);
+    } else {
+    movies = imdb.Movies.filter(movie => movie.Title.includes(movies));
     console.log(movies);
+  }
+    // create movie card for each movie
     movies.map(function(movie) {
       //create card div element + apply class
       movieCard = document.createElement('div');
@@ -306,50 +315,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
     });
   };
 
-
-  //filtered movie objects/arrays
-  const selectMovies = function(movies) {
-    switch (movies) {
-      case'nieuwste':
-        const imdbYearDesc = imdb.Movies.filter(movie => parseInt(movie.Year) < 2014);
-        console.log(imdbYearDesc);
-        createMovieCards(imdbYearDesc);
-        break;
-      case'avengers':
-        const imdbAvengers = imdb.Movies.filter(movie => movie.Title.includes('Avengers'));
-        createMovieCards(imdbAvengers);
-        break;
-      case'xmen':
-        const imdbXmen = imdb.Movies.filter(movie => movie.Title.includes('X-Men'));
-        createMovieCards(imdbXmen);
-        break;
-      case'princess':
-        const imdbPrincess = imdb.Movies.filter(movie => movie.Title.includes('Princess'));
-        createMovieCards(imdbPrincess);
-        break;
-      case'batman':
-        const imdbBatman = imdb.Movies.filter(movie => movie.Title.includes('Batman'));
-        createMovieCards(imdbBatman);
-        break;
-      default:
-        createMovieCards(imdb.Movies);
-        break;
-    }
-
-  };
-
   //invoke all movies at start
-  selectMovies();
+  createMovieCards();
 
   // remove movie cards from .movies DOM element
   const deleteMovieCards = function(movies) {
     let movieCard = document.querySelector('.movies');
+
     // remove card elements if present
     while (movieCard.firstChild) {
       movieCard.removeChild(movieCard.firstChild);
     }
-    //populate filter movies based of filter selection
-    selectMovies(movies);
+
+    // create cards based on input
+    createMovieCards(movies);
   }
 
   // logic
